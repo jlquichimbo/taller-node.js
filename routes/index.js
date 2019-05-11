@@ -1,6 +1,12 @@
-const express = requere('express')
+const express = require('express')
 const app = express()
 
 
-app.use('./users.js')
-module.expoert = app
+
+//Use of routes
+app.use(require('./access.js'));
+app.use(require('./rol.js'));
+app.use(require('./sala.js'));
+app.use(require('./user.js'));
+
+module.exports = app;
