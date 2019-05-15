@@ -1,6 +1,8 @@
-var express = require('express');
-var app = express();
+const express = require('express');
+const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
+// const cors = require('cors')
+const app = express();
 const port = 3000
 
 
@@ -13,19 +15,24 @@ app.use(bodyParser.urlencoded({
   extended: false
 }))
 
-app.use(bodyParser.json);
+app.use(bodyParser.json());
 
 // routes
 app.use(require('./routes/index'));
 
-
-// app.get('/usuario', function (req, res) {
-//   res.send('Hello World!');
-// });
 
 
 app.listen(3000, function () {
   let cliente = 'Jose'
   console.log('Example app listening on port 3000!');
   console.log(`Hola ${cliente}!`);
+});
+
+
+// BASE DE DATOS
+mongoose.connect('mongodb://localhost:27017/sga',{
+  useNewUrlParser: true
+}, (err, res) =>{
+  if(err) throw error;
+  console.log(`Mongo is working ${6+7}`);
 });
