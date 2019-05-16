@@ -25,12 +25,46 @@ app.get("/user", (req,res) => {
   })
 })
 
+app.put('/user/:id', (req, res) => {
+  let id = req.params.id
+  let body = req.body
+  let userEdit = {
+    nombre: body.nombre,
+    apellido: body.apellido,
+    edad: body.edad
+  }
+
+  User.findByIdAndUpdate(id, userEdit, {
+    new: true,
+    runValidators: true
+  }, (err, usuarioDB)=>{
+    if (err) {
+        
+      return usuarioDB.status(500).json({
+        ok: false,
+        err
+      })
+    }
+    if (!usuarioDB) {
+      return usuarioDB.status(400).json({
+        ok: false,
+        usuarioDB
+      })
+    }
+    res.status(200).json({
+      ok: true,
+      usuarioDB
+    })
+
+  })
+})
+
 app.post("/user", (req, res)=>{
   let body = req.body
   let userSave = new User({
-      nombre: body.nombre,
-      apellido: body.apellido,
-      edad: body.edad
+      name: body.name,
+      lastname: body.lastname,
+      age: body.age
     }
   )
 
