@@ -12,7 +12,7 @@ const User = require('../models/user')
 
 app.get("/user", (req,res) => {
   User.find({
-    "state": true
+    "status": true
   }).populate('Rol').exec((err, usuarioDB) => {
     if (err) {
       return res.status(500).json({
