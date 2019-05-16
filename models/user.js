@@ -16,6 +16,10 @@ let userSchema = new Schema({
         type: String,
         required: [true, "Fill the email please"]
     },
+    username: {
+        type: String,
+        required: [true, "Fill the username please"]
+    },
     password: {
         type: String,
         required: [true, "Fill the password please"]

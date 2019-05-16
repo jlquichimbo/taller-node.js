@@ -11,7 +11,9 @@ const User = require('../models/user')
 // })
 
 app.get("/user", (req,res) => {
-  User.find().exec((err, usuarioDB) => {
+  User.find({
+    "state": true
+  }).populate('Rol').exec((err, usuarioDB) => {
     if (err) {
       return res.status(500).json({
         ok: false,
@@ -29,9 +31,13 @@ app.put('/user/:id', (req, res) => {
   let id = req.params.id
   let body = req.body
   let userEdit = {
-    nombre: body.nombre,
-    apellido: body.apellido,
-    edad: body.edad
+    name: body.name,
+    lastname: body.lastname,
+    email: body.email,
+    username: body.username,
+    password: body.password,
+    age: body.age,
+    rol: body.rol
   }
 
   User.findByIdAndUpdate(id, userEdit, {
@@ -63,8 +69,12 @@ app.post("/user", (req, res)=>{
   let body = req.body
   let userSave = new User({
       name: body.name,
-      lastname: body.lastname,
-      age: body.age
+      lastName: body.lastName,
+      username: body.username,
+      email: body.email,
+      password: body.password,
+      age: body.age,
+      rol: body.rol
     }
   )
 
@@ -91,4 +101,36 @@ app.post("/user", (req, res)=>{
   // let permiso = new PermisoRol([{day: body.day, start_time: body.start_time,
   //                                 end_time, rol: body.rol}])
 });
+
+app.delete('/user:id', (req, res)=>{
+  let id = req.params.id
+  let userState = {
+    state: false
+  }
+
+  User.findByIdAndUpdate(id, userState, {
+    new: true,
+    runValidators: true
+  }, (err, usuarioDB)=>{
+    if (err) {
+      return res.status(500).json({
+        ok: false,
+        err
+      })
+    }
+    if(!usuarioDB){
+      return res.status(400).json({
+        ok: false,
+        err
+      })
+    }
+    res.status(200).json({
+      ok: true,
+      usuarioDB
+    })
+  })
+
+  User
+})
+
 module.exports = app;
