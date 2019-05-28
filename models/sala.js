@@ -6,14 +6,14 @@ const express = require('express')
 const app = express()
 
 
-let rolSchema = new Schema({
+let salaSchema = new Schema({
     name: {
         type: String,
-        required: [true, "The role name should be filled"]
+        required: [true, "The sala name should be filled"]
     },
     description: {
         type: String,
-        required: [true, "The description should be filled"]
+        required: [true, "The sala description should be filled"]
         
     },
     state: {
@@ -22,4 +22,4 @@ let rolSchema = new Schema({
     }
 })
 
-module.exports = mongoose.model('Rol', rolSchema)
+module.exports = mongoose.model('Sala', salaSchema)
