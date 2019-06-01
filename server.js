@@ -1,3 +1,4 @@
+require('./config/config')
 const express = require('express');
 const mongoose = require('mongoose')
 const bodyParser = require('body-parser')
@@ -21,18 +22,18 @@ app.use(bodyParser.json());
 app.use(require('./routes/index'));
 
 
-
-app.listen(3000, function () {
-  let cliente = 'Jose'
-  console.log('Example app listening on port 3000!');
-  console.log(`Hola ${cliente}!`);
-});
-
-
 // BASE DE DATOS
-mongoose.connect('mongodb://localhost:27017/sga2',{
+mongoose.connect(process.env.URLDB,{
   useNewUrlParser: true
 }, (err, res) =>{
   if(err) throw error;
   console.log(`Mongo is working ${6+7}`);
 });
+
+// Port 
+app.listen(process.env.PORT, () => {
+  // console.log("NODEJS LISTENING ", process.env.PORT);    
+  console.log("NODEJS WORKING");
+});
+
+
